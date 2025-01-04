@@ -34,6 +34,20 @@ const authenticateJWT = (req, res, next) => {
     next();
   });
 };
+app.get('/', async (req, res) => {
+  try {
+    // Basic test data to verify the service is working
+    const testData = {
+      message: 'Blog Service is working',
+      status: 'success',
+      timestamp: new Date().toISOString(),
+    };
+
+    res.status(200).json(testData);
+  } catch (error) {
+    res.status(500).json({ message: 'Error in the test endpoint', error });
+  }
+});
 
 // Create a new blog post
 app.post('/blogs', authenticateJWT, async (req, res) => {
