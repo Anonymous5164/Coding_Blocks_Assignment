@@ -1,9 +1,8 @@
 # Deployable Multi-Service Blog Application
 
-This repository contains the implementation of a multi-service blog platform using Docker and AWS. The platform includes the following services: User, Blog, Comment, and Database. The application is live at [AWS EC2 Link](http://ec2-13-49-243-60.eu-north-1.compute.amazonaws.com).
+This repository contains the implementation of a multi-service blog platform using Docker and AWS. The platform includes the following services: User, Blog, Comment, and Database.
 
 ## Table of Contents
-
 - [Objective](#objective)
 - [Services Overview](#services-overview)
   - [User Service](#user-service)
@@ -22,7 +21,6 @@ This repository contains the implementation of a multi-service blog platform usi
 ---
 
 ## Objective
-
 The goal of this project is to develop and deploy a scalable, containerized multi-service application that demonstrates skills in backend development, container orchestration, and cloud deployment.
 
 ---
@@ -30,7 +28,6 @@ The goal of this project is to develop and deploy a scalable, containerized mult
 ## Services Overview
 
 ### 1. User Service
-
 - **Description**: Handles user authentication and profile management.
 - **Features**:
   - Authentication with JWT.
@@ -41,10 +38,9 @@ The goal of this project is to develop and deploy a scalable, containerized mult
   - `GET /users/<id>`: Retrieve user details.
   - `PUT /users/<id>`: Edit user details.
   - `DELETE /users/<id>`: Delete user.
-- **Port**: Accessible at port `3000`.
+- **Port**: Accessible at `http://localhost:3000`.
 
 ### 2. Blog Service
-
 - **Description**: Manages blog posts with pagination for scalability.
 - **Features**:
   - CRUD operations for blog posts.
@@ -55,20 +51,18 @@ The goal of this project is to develop and deploy a scalable, containerized mult
   - `GET /blogs/<id>`: Fetch a specific blog post.
   - `PUT /blogs/<id>`: Edit a blog post.
   - `DELETE /blogs/<id>`: Delete a blog post.
-- **Port**: Accessible at port `3001`.
+- **Port**: Accessible at `http://localhost:3001`.
 
 ### 3. Comment Service
-
 - **Description**: Manages comments for blog posts.
 - **Features**:
   - Flat structure for comments (extensible for nested comments).
 - **Endpoints**:
   - `POST /comments/`: Add a comment.
   - `GET /comments?post_id=<id>`: List comments for a specific blog post.
-- **Port**: Accessible at port `3002`.
+- **Port**: Accessible at `http://localhost:3002`.
 
 ### 4. Database Service
-
 - **Description**: Centralized PostgreSQL database with separate schemas for each service.
 
 ---
@@ -125,13 +119,10 @@ The architecture consists of four services communicating over Docker networks. E
    ```bash
    docker-compose up --build -d
    ```
-6. The application is live at the public IP of your EC2 instance.
-
----
-
-## API Documentation
-
-Detailed API documentation with request/response formats is available in [API\_DOC.md](link-to-api-doc-file).
+6. Access the services at the following ports:
+   - User Service: `http://<EC2-IP>:3000`
+   - Blog Service: `http://<EC2-IP>:3001`
+   - Comment Service: `http://<EC2-IP>:3002`
 
 ---
 
@@ -142,9 +133,9 @@ Since this is a backend project without a frontend, use tools like [Postman](htt
 1. Open Postman.
 2. Create a new request and set the method (e.g., POST, GET).
 3. Enter the endpoint URL:
-   - User Service: `http://ec2-13-49-243-60.eu-north-1.compute.amazonaws.com:3000/<endpoint>`
-   - Blog Service: `h`[`ttp://ec2-13-49-243-60.eu-north-1.compute.amazonaws.com:`](http://ec2-13-49-243-60.eu-north-1.compute.amazonaws.com)`3001/<endpoint>`
-   - Comment Service: `http://ec2-13-49-243-60.eu-north-1.compute.amazonaws.com:3002/<endpoint>`
+   - User Service: `http://localhost:3000/<endpoint>`
+   - Blog Service: `http://localhost:3001/<endpoint>`
+   - Comment Service: `http://localhost:3002/<endpoint>`
 4. Add necessary headers and body data.
 5. Send the request and verify the response.
 
