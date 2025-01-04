@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  user:
+    build:
+      context: ./user
+    ports:
+      - "3000:3000"
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
+    volumes:
+      - user_logs:/app/logs
+    networks:
+      - app-network
+
+  blog:
+    build:
+      context: ./blog
+    ports:
+      - "3001:3001"
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
+    volumes:
+      - blog_logs:/app/logs
+    networks:
+      - app-network
+
+  comment:
+    build:
+      context: ./comment
+    ports:
+      - "3002:3002"
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
+    volumes:
+      - comment_logs:/app/logs
+    networks:
+      - app-network
+
+volumes:
+  user_logs:
+  blog_logs:
+  comment_logs:
+
+networks:
+  app-network:
+    driver: bridge
