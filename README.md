@@ -224,7 +224,7 @@ Authorization: Bearer <your-jwt-token>
   ```
 - **List Comments for a Blog Post**:
   ```
-  GET http://localhost:3002/comments?blogId=1
+  GET http://localhost:3002/comments?post_id=1
   ```
 
 ---
