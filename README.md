@@ -47,7 +47,6 @@ The goal of this project is to develop and deploy a scalable, containerized mult
   - Built-in pagination.
 - **Endpoints**:
   - `POST /blogs/`: Create a new blog post.
-  - `GET /blogs/`: List all blog posts.
   - `GET /blogs/<id>`: Fetch a specific blog post.
   - `PUT /blogs/<id>`: Edit a blog post.
   - `DELETE /blogs/<id>`: Delete a blog post.
@@ -59,7 +58,7 @@ The goal of this project is to develop and deploy a scalable, containerized mult
   - Flat structure for comments (extensible for nested comments).
 - **Endpoints**:
   - `POST /comments/`: Add a comment.
-  - `GET /comments?post_id=<id>`: List comments for a specific blog post.
+  - `GET /comments?blogId=<id>`: List comments for a specific blog post.
 - **Port**: Accessible at `http://localhost:3002`.
 
 ### 4. Database Service
@@ -126,18 +125,113 @@ The architecture consists of four services communicating over Docker networks. E
 
 ---
 
+## API Documentation
+
+Here are examples of how to use all API endpoints in the project. For endpoints that require authentication, include the JWT token in the request header as follows:
+
+```
+Authorization: Bearer <your-jwt-token>
+```
+
+### User Service (Port 3000)
+- **Register a User**:
+  ```
+  POST http://localhost:3000/register
+  Body: {
+    "username": "testuser",
+    "password": "securepassword"
+  }
+  ```
+- **Login**:
+  ```
+  POST http://localhost:3000/login
+  Body: {
+    "username": "testuser",
+    "password": "securepassword"
+  }
+  ```
+- **Get User Details** (Requires JWT Token):
+  ```
+  GET http://localhost:3000/users/1
+  Headers: {
+    "Authorization": "Bearer <your-jwt-token>"
+  }
+  ```
+- **Edit User Details** (Requires JWT Token):
+  ```
+  PUT http://localhost:3000/users/1
+  Headers: {
+    "Authorization": "Bearer <your-jwt-token>"
+  }
+  Body: {
+    "username": "updateduser"
+  }
+  ```
+- **Delete User** (Requires JWT Token):
+  ```
+  DELETE http://localhost:3000/users/1
+  Headers: {
+    "Authorization": "Bearer <your-jwt-token>"
+  }
+  ```
+
+### Blog Service (Port 3001)
+- **Create a Blog Post** (Requires JWT Token):
+  ```
+  POST http://localhost:3001/blogs
+  Headers: {
+    "Authorization": "Bearer <your-jwt-token>"
+  }
+  Body: {
+    "title": "My First Blog",
+    "content": "This is the content of my first blog."
+  }
+  ```
+- **Fetch a Specific Blog**:
+  ```
+  GET http://localhost:3001/blogs/1
+  ```
+- **Edit a Blog Post** (Requires JWT Token):
+  ```
+  PUT http://localhost:3001/blogs/1
+  Headers: {
+    "Authorization": "Bearer <your-jwt-token>"
+  }
+  Body: {
+    "title": "Updated Blog Title",
+    "content": "Updated blog content."
+  }
+  ```
+- **Delete a Blog Post** (Requires JWT Token):
+  ```
+  DELETE http://localhost:3001/blogs/1
+  Headers: {
+    "Authorization": "Bearer <your-jwt-token>"
+  }
+  ```
+
+### Comment Service (Port 3002)
+- **Add a Comment** (Requires JWT Token):
+  ```
+  POST http://localhost:3002/comments
+  Headers: {
+    "Authorization": "Bearer <your-jwt-token>"
+  }
+  Body: {
+    "blogId": 1,
+    "content": "This is a comment on the blog post."
+  }
+  ```
+- **List Comments for a Blog Post**:
+  ```
+  GET http://localhost:3002/comments?blogId=1
+  ```
+
+---
+
 ## Testing Instructions
 
-Since this is a backend project without a frontend, use tools like [Postman](https://www.postman.com/) or cURL to test the API endpoints. For example:
-
-1. Open Postman.
-2. Create a new request and set the method (e.g., POST, GET).
-3. Enter the endpoint URL:
-   - User Service: `http://localhost:3000/<endpoint>`
-   - Blog Service: `http://localhost:3001/<endpoint>`
-   - Comment Service: `http://localhost:3002/<endpoint>`
-4. Add necessary headers and body data.
-5. Send the request and verify the response.
+Since this is a backend project without a frontend, use tools like [Postman](https://www.postman.com/) or cURL to test the API endpoints. Refer to the [API Documentation](#api-documentation) for endpoint examples.
 
 ---
 
@@ -157,6 +251,12 @@ Create `.env` files for local and production environments. Example:
 DATABASE_URL=postgres://<user>:<password>@<host>:<port>/<db>
 JWT_SECRET=<your-secret-key>
 ```
+
+---
+
+## Disclaimer
+
+Ensure that all required databases and schemas are created before running the application. For this project, databases were created using Neon Console for PostgreSQL along with the required schemas and SQL setup.
 
 ---
 
