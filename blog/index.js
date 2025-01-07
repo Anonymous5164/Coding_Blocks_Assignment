@@ -67,13 +67,10 @@ app.post('/blogs', authenticateJWT, async (req, res) => {
 
 // List all blog posts with pagination
 app.get('/blogs', async (req, res) => {
-  const { page = 1, limit = 10 } = req.query; // Default to page 1 and limit 10
-  const offset = (page - 1) * limit;
-
+  
   try {
     const result = await dbClient.query(
-      'SELECT * FROM blogs ORDER BY created_at DESC LIMIT $1 OFFSET $2',
-      [limit, offset]
+      'SELECT * FROM blogs ORDER BY id DESC',
     );
     res.json(result.rows);
   } catch (error) {
